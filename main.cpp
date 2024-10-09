@@ -113,7 +113,7 @@ void displayFixtures(const vector<Match> &fixtures) {
 }
 
 int main() {
-    string filename = "C:\\Users\\Ocholla\\Desktop\\proj\\cmake-build-debug\\Teams.csv";  // Input CSV file
+    string filename = "Teams.csv";  // Input CSV file
 
     // Read teams from CSV
     vector<Team> teams = readCSV(filename);
