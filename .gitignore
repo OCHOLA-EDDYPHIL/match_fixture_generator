@@ -1,1 +1,3 @@
+/cmake-build-debug/*
+/fixtures_output.csv
 /.idea/*
