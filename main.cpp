@@ -6,23 +6,42 @@
 
 using namespace std;
 
+/**
+ * \struct Team
+ * \brief Represents a team with its name, town, and stadium.
+ */
 struct Team {
-    string name;
-    string town;
-    string stadium;
+    string name;     ///< Name of the team
+    string town;     ///< Town of the team
+    string stadium;  ///< Stadium of the team
 
+    /**
+     * \brief Constructor to initialize a Team object.
+     * \param name Name of the team
+     * \param town Town of the team
+     * \param stadium Stadium of the team
+     */
     Team(const string &name, const string &town, const string &stadium) : name(name), town(town), stadium(stadium) {}
 };
 
+/**
+ * \struct Match
+ * \brief Represents a match between two teams.
+ */
 struct Match {
-    string homeTeam;
-    string awayTeam;
-    string localTown;
-    string stadium;
-    int leg;
-    int weekend;
+    string homeTeam;  ///< Home team name
+    string awayTeam;  ///< Away team name
+    string localTown; ///< Town where the match is played
+    string stadium;   ///< Stadium where the match is played
+    int leg;          ///< Leg of the match (1 or 2)
+    int weekend;      ///< Weekend number when the match is played
 };
 
+/**
+ * \brief Reads team data from a CSV file.
+ * \param filename Name of the CSV file to read from
+ * \return A vector of Team objects
+ */
 vector<Team> readCSV(const string &filename) {
     vector<Team> teams;
     ifstream file(filename);
@@ -51,6 +70,11 @@ vector<Team> readCSV(const string &filename) {
     return teams;
 }
 
+/**
+ * \brief Generates a list of fixtures where each team plays every other team twice (home and away).
+ * \param teams A vector of Team objects
+ * \param fixtures A vector to store the generated Match objects
+ */
 void generateFixture(const vector<Team> &teams, vector<Match> &fixtures) {
     int weekend = 1;        // To track which weekend the match is on
     int matchCount = 0;      // Track matches per weekend to ensure we only have 2 matches per weekend
@@ -84,6 +108,11 @@ void generateFixture(const vector<Team> &teams, vector<Match> &fixtures) {
     // At this point, all 45 matches (home and away for 10 teams) should have been generated
 }
 
+/**
+ * \brief Writes the generated fixtures to a CSV file.
+ * \param fixtures A vector of Match objects
+ * \param filename Name of the CSV file to write to
+ */
 void writeFixturesToCSV(const vector<Match> &fixtures, const string &filename) {
     ofstream outFile(filename);
     if (!outFile.is_open()) {
@@ -105,6 +134,10 @@ void writeFixturesToCSV(const vector<Match> &fixtures, const string &filename) {
     cout << "Fixtures have been written to " << filename << endl;
 }
 
+/**
+ * \brief Displays the fixtures on the console.
+ * \param fixtures A vector of Match objects
+ */
 void displayFixtures(const vector<Match> &fixtures) {
     for (const auto &fixture: fixtures) {
         cout << "| Weekend: " << fixture.weekend << " | Match: " << fixture.homeTeam << " vs " << fixture.awayTeam
@@ -112,6 +145,10 @@ void displayFixtures(const vector<Match> &fixtures) {
     }
 }
 
+/**
+ * \brief Main function to read team data, generate fixtures, display and write them to a CSV file.
+ * \return Exit status
+ */
 int main() {
     string filename = "Teams.csv";  // Input CSV file
 
