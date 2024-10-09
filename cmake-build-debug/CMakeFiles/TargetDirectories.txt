@@ -1,3 +1,0 @@
-C:/Users/Ocholla/Desktop/proj/cmake-build-debug/CMakeFiles/proj.dir
-C:/Users/Ocholla/Desktop/proj/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Ocholla/Desktop/proj/cmake-build-debug/CMakeFiles/rebuild_cache.dir

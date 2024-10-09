@@ -7,4 +7,4 @@ include_directories(.)
 
 add_executable(fixture_generator
         main.cpp
-        cmake-build-debug/Teams.csv)
+        Teams.csv)
