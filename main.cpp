@@ -23,7 +23,6 @@ struct Match {
     int weekend;
 };
 
-// Read teams from the CSV
 vector<Team> readCSV(const string &filename) {
     vector<Team> teams;
     ifstream file(filename);
@@ -52,63 +51,39 @@ vector<Team> readCSV(const string &filename) {
     return teams;
 }
 
-// Generate the fixtures
 void generateFixture(const vector<Team> &teams, vector<Match> &fixtures) {
-    int weekend = 1;
-    int matchCount = 0;  // Counter to ensure 2 matches per weekend
-    vector<Match> rivalry;
-    vector<Match> nonDerby;
+    int weekend = 1;        // To track which weekend the match is on
+    int matchCount = 0;      // Track matches per weekend to ensure we only have 2 matches per weekend
     size_t numTeams = teams.size();
 
+    // Ensure each team plays every other team exactly twice (home and away)
     for (size_t a = 0; a < numTeams; ++a) {
         for (size_t b = a + 1; b < numTeams; ++b) {
-            if (teams[a].town != teams[b].town) {
-                // Non-derby fixtures
-                nonDerby.push_back({teams[a].name, teams[b].name, teams[a].town, teams[a].stadium, 1, weekend});
-                nonDerby.push_back({teams[b].name, teams[a].name, teams[b].town, teams[b].stadium, 2, weekend});
-            } else {
-                // Derbies
-                rivalry.push_back({teams[a].name, teams[b].name, teams[a].town, teams[a].stadium, 1, weekend});
-                rivalry.push_back({teams[b].name, teams[a].name, teams[b].town, teams[b].stadium, 2, weekend});
+            // First leg: team[a] plays at home against team[b]
+            fixtures.push_back({teams[a].name, teams[b].name, teams[a].town, teams[a].stadium, 1, weekend});
+            matchCount++;
+
+            // Increment weekend after 2 matches
+            if (matchCount == 2) {
+                weekend++;
+                matchCount = 0;  // Reset for next weekend
+            }
+
+            // Second leg: team[b] plays at home against team[a]
+            fixtures.push_back({teams[b].name, teams[a].name, teams[b].town, teams[b].stadium, 2, weekend});
+            matchCount++;
+
+            // Increment weekend after 2 matches
+            if (matchCount == 2) {
+                weekend++;
+                matchCount = 0;
             }
         }
     }
 
-    // Schedule non-derby matches first (2 matches per weekend)
-    for (size_t i = 0; i < nonDerby.size(); i += 2) {
-        // Schedule two matches per weekend
-        if (matchCount == 2) {
-            weekend++;
-            matchCount = 0;
-        }
-        fixtures.push_back(nonDerby[i]);
-        matchCount++;
-
-        if (i + 1 < nonDerby.size()) {
-            fixtures.push_back(nonDerby[i + 1]);
-            matchCount++;
-        }
-    }
-
-    // Now schedule the local derbies
-    matchCount = 0;  // Reset the counter for the derbies
-    for (auto &rivals: rivalry) {
-        if (matchCount == 2) {
-            weekend++;
-            matchCount = 0;
-        }
-        rivals.weekend = weekend;
-        fixtures.push_back(rivals);
-        matchCount++;
-    }
-
-    // Handling odd number of teams by adding a bye
-    if (numTeams % 2 != 0) {
-        fixtures.push_back({"N/A", teams.back().name, "N/A", "N/A", 0, weekend++});
-    }
+    // At this point, all 45 matches (home and away for 10 teams) should have been generated
 }
 
-// Output fixtures to a CSV file
 void writeFixturesToCSV(const vector<Match> &fixtures, const string &filename) {
     ofstream outFile(filename);
     if (!outFile.is_open()) {
@@ -130,7 +105,6 @@ void writeFixturesToCSV(const vector<Match> &fixtures, const string &filename) {
     cout << "Fixtures have been written to " << filename << endl;
 }
 
-// Display fixtures
 void displayFixtures(const vector<Match> &fixtures) {
     for (const auto &fixture: fixtures) {
         cout << "| Weekend: " << fixture.weekend << " | Match: " << fixture.homeTeam << " vs " << fixture.awayTeam
