@@ -87,8 +87,6 @@ Weekend,Home Team,Away Team,Town,Stadium,Leg
 ```
 
 ## License
-This project is licensed under the MIT License - see the `LICENSE` file for details.
-
 ## Notes
 - Make sure to keep the `Teams.csv` file in the same directory as the compiled executable or provide the correct path in the code.
 - Ensure that your CSV input format is correct to avoid any errors while reading team data.
