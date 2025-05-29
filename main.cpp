@@ -131,7 +131,7 @@ int main() {
     displayFixtures(fixtures);
 
     // Write fixtures to a CSV file
-    writeFixturesToCSV(fixtures, "../fixtures_output.csv");
+    writeFixturesToCSV(fixtures, "fixtures_output.csv");
 
     return 0;
 }
