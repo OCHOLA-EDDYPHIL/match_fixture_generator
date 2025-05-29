@@ -33,7 +33,9 @@ This project is a C++ console application that generates football match fixtures
     ```bash
     git clone https://github.com/OCHOLA-EDDYPHIL/fixture_generator.git
     ```
-2. Ensure the `teams.csv` file is placed in the same directory as the executable or adjust the path in the `main.cpp` file if needed.
+2. Ensure the `Teams.csv` file is placed in the same directory as the executable or adjust the path in the `main.cpp` file if needed.
+
+3. Ensure the csv file is `Teams.csv` and not `teams.csv` to avoid errors.
 
 ## How to Run
 1. Compile the project using your preferred IDE or the command line:
@@ -42,12 +44,12 @@ This project is a C++ console application that generates football match fixtures
     ```
 2. Run the executable:
     ```bash
-    ./main.exe
+    ./fixture_generator
     ```
 3. The program will display the list of teams and the generated fixtures in the console. It will also write the fixtures to a CSV file named `fixtures_output.csv`.
 
 ## Input File Format
-The input file `teams.csv` contains the list of teams with their town and stadium information. Ensure the CSV file follows this format:
+The input file `Teams.csv` contains the list of teams with their town and stadium information. Ensure the CSV file follows this format:
 ```csv
 Team Name,Local Town,Team Stadium
 Cklein Starts,Nairobi,Cklein Arena
